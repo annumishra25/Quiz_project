@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>F1 LIVE QUIZ - Race Lobby</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,700;0,800;1,700;1,800&amp;family=Inter:wght@400;600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Animation Library -->
+<script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .glass-panel {
+            background: rgba(31, 33, 36, 0.6);
+            backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .carbon-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20L0 20zM20 20h20L20 40z' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.03) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        .neon-glow-red {
+            box-shadow: 0 0 15px rgba(225, 6, 0, 0.3);
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(0.95); opacity: 1; }
+        }
+        .pulse-animation {
+            animation: pulse-red 2s infinite;
+        }
+
+        .blur-background {
+            filter: blur(60px);
+            transform: scale(1.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#ffb4a8",
+                        "on-surface-variant": "#e9bcb5",
+                        "on-secondary": "#2f3034",
+                        "secondary-fixed-dim": "#c6c6ca",
+                        "surface-container-high": "#2a2a2a",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#00dbe9",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary": "#00dbe9",
+                        "surface": "#131313",
+                        "on-tertiary-fixed": "#002022",
+                        "background": "#131313",
+                        "tertiary-container": "#007c84",
+                        "on-surface": "#e5e2e1",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-fixed-variant": "#004f54",
+                        "on-tertiary": "#00363a",
+                        "surface-tint": "#ffb4a8",
+                        "primary": "#ffb4a8",
+                        "on-tertiary-container": "#d7fbff",
+                        "secondary": "#c6c6ca",
+                        "tertiary-fixed": "#7df4ff",
+                        "on-primary-fixed-variant": "#930300",
+                        "outline-variant": "#5e3f3a",
+                        "inverse-on-surface": "#313030",
+                        "surface-container": "#201f1f",
+                        "surface-container-highest": "#353534",
+                        "primary-container": "#e10600",
+                        "on-error-container": "#ffdad6",
+                        "outline": "#af8781",
+                        "inverse-primary": "#c00500",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-container": "#fff2f0",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#b7b8bc",
+                        "primary-fixed": "#ffdad4",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#e2e2e6",
+                        "on-background": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-container": "#47494c",
+                        "on-secondary-fixed": "#1a1c1f",
+                        "on-primary": "#680200",
+                        "on-primary-fixed": "#410100",
+                        "on-secondary-fixed-variant": "#45474a",
+                        "surface-variant": "#353534"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Anybody"],
+                        "display-lg": ["Anybody"],
+                        "headline-lg": ["Anybody"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "1.5", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-white carbon-pattern overflow-hidden h-screen flex flex-col">
+<!-- Background Shader with Blur -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<!-- STITCH_SHADER_START:ANIMATION_1 class="absolute inset-0 w-full h-full blur-background" -->
+<div class="absolute inset-0 w-full h-full blur-background" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_1" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_1');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec3 color = vec3(0.043, 0.043, 0.043); // Deep carbon background
+    
+    // Animated racing streaks
+    float speed = 2.0;
+    float time = u_time * speed;
+    
+    for(float i = 0.0; i < 8.0; i++) {
+        float row = floor(uv.y * 20.0 + i);
+        float offset = random(vec2(row, 1.0)) * 10.0;
+        float streak = step(0.98, fract(uv.x - time * (0.5 + random(vec2(row)) * 0.5) + offset));
+        
+        // F1 Red glow
+        vec3 streakColor = vec3(0.882, 0.024, 0.0);
+        color = mix(color, streakColor, streak * 0.3 * (1.0 - uv.x));
+    }
+
+    // Subtle vignette
+    float vignette = 1.0 - length(uv - 0.5) * 0.5;
+    color *= vignette;
+
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_1 -->
+<div class="absolute inset-0 bg-black/40"></div>
+<div class="absolute inset-0 scanline"></div>
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/60 dark:bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(225,6,0,0.1)] flex items-center justify-between px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="text-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold tracking-tighter text-primary italic">F1 LIVE QUIZ</h1>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container overflow-hidden active:scale-95 transition-transform cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A high-performance Formula 1 driver avatar wearing a sleek carbon fiber helmet with glowing red visors, presented in a sharp digital art style with dynamic lighting effects and a professional esports profile aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaqe-YaRJ7ajvG7vIaIb84llqpzwXZHTdwKN1TNlwosagmg8opS-gZpplgvBRhVnqrewgd_pDUDGqPs-hXydVZ9nBmTJZZRXUW-pNThZrZHgT8AO4dcNzTgau1c_Mzo3m24Nm_sf6eStG0QrhEUNjO5HTbr2QksdaOHHrnrMW87pqk8SNSQZOR5cJ1V0lzkMvocUxYBqJMu9ke0D7UvmPOfMDZoi4pRvPSN7C7ilse74653CNAHaiZefS9RpWfYhM8mNs-vdqS3yYl"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 pb-24 px-margin-mobile relative z-10 overflow-y-auto overflow-x-hidden max-w-lg mx-auto w-full">
+<!-- Header Section -->
+<section class="mb-8">
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold">Race Lobby</h2>
+<div class="flex items-center gap-2 px-3 py-1 glass-panel rounded-full border border-primary-container/30">
+<div class="w-2 h-2 rounded-full bg-primary-container pulse-animation"></div>
+<span class="font-label-sm text-label-sm text-primary-container">CONNECTED</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant italic">Silverstone Circuit • Live Event</p>
+</section>
+<!-- Player Stats -->
+<section class="glass-panel p-6 rounded-xl mb-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 blur-3xl rounded-full -mr-16 -mt-16"></div>
+<div class="flex justify-between items-end mb-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Participants Joined</span>
+<span class="font-headline-lg text-primary-container font-extrabold italic">12 / 20</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant">LOBBY ID: #F1-9923</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[60%] shadow-[0_0_10px_rgba(225,6,0,0.5)] transition-all duration-1000 ease-out"></div>
+</div>
+</section>
+<!-- Participants List Header -->
+<div class="flex items-center justify-between mb-4 px-2">
+<h3 class="font-title-md text-title-md text-on-surface">Drivers Ready</h3>
+<div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="group">group</span>
+                WAITING FOR HOST
+                <span class="flex gap-1">
+<span class="animate-bounce" style="animation-delay: 0.1s">.</span>
+<span class="animate-bounce" style="animation-delay: 0.2s">.</span>
+<span class="animate-bounce" style="animation-delay: 0.3s">.</span>
+</span>
+</div>
+</div>
+<!-- Scrollable Player List -->
+<div class="space-y-4 mb-8" id="player-list">
+<!-- Items injected via JS for Framer Motion Stagger -->
+</div>
+<!-- Floating Start Button Container -->
+<div class="sticky bottom-4 left-0 right-0 z-20 px-2 mt-8">
+<button class="w-full h-16 bg-primary-container text-on-primary-container font-headline-lg-mobile text-headline-lg-mobile font-black rounded-xl shadow-[0_0_25px_rgba(225,6,0,0.4)] active:scale-[0.98] transition-transform flex items-center justify-center gap-3 italic">
+                START RACE
+                <span class="material-symbols-outlined text-3xl" data-icon="sports_score">sports_score</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container/60 dark:bg-surface-container/60 backdrop-blur-2xl border-t border-white/10 shadow-[0_-5px_20px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 pb-safe px-margin-mobile">
+<a class="flex flex-col items-center justify-center text-primary filter drop-shadow-[0_0_8px_rgba(225,6,0,0.6)] hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="sports_score" style="font-variation-settings: 'FILL' 1;">sports_score</span>
+<span class="font-label-sm text-label-sm">Race</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="font-label-sm text-label-sm">Standings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="local_mall">local_mall</span>
+<span class="font-label-sm text-label-sm">Store</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const playerList = document.getElementById('player-list');
+            const players = [
+                { name: 'MAX_VERSTAPPEN_33', rank: 'P1', status: 'ready', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100' },
+                { name: 'LEWIS_CHAMP_44', rank: 'P2', status: 'ready', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=100' },
+                { name: 'CHARLES_LEC_16', rank: 'P3', status: 'waiting', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100' },
+                { name: 'CHECO_SP_11', rank: 'P4', status: 'ready', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100' },
+                { name: 'LANDO_N_4', rank: 'P5', status: 'ready', avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=100' },
+                { name: 'RUSSELL_GR_63', rank: 'P6', status: 'waiting', avatar: 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&q=80&w=100' }
+            ];
+
+            players.forEach((player, index) => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel p-4 rounded-xl flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 cursor-default opacity-0';
+                card.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`;
+                
+                const statusColor = player.status === 'ready' ? 'text-tertiary' : 'text-on-surface-variant opacity-40';
+                const statusIcon = player.status === 'ready' ? 'check_circle' : 'hourglass_empty';
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-12 h-12 rounded-lg bg-surface-container-highest border border-white/10 overflow-hidden">
+                                <img src="${player.avatar}" data-alt="A professional headshot of an esports competitor with dramatic lighting, wearing team gear, set against a dark architectural background." class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            </div>
+                            <div class="absolute -bottom-1 -right-1 bg-surface-bright px-1 rounded text-[10px] font-black text-primary italic border border-white/10">
+                                ${player.rank}
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-label-sm text-on-surface font-bold tracking-wider">${player.name}</p>
+                            <p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Verified Racer</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="material-symbols-outlined ${statusColor}" data-icon="${statusIcon}" ${player.status === 'ready' ? 'style="font-variation-settings: \'FILL\' 1;"' : ''}>
+                            ${statusIcon}
+                        </span>
+                    </div>
+                `;
+                playerList.appendChild(card);
+            });
+        });
+
+        // Add the fadeInUp animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body></html>

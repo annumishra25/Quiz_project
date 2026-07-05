@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>F1 LIVE QUIZ - Leaderboard & Stats</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800&family=Inter:wght@400;600&family=Geist:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@100..900&family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'Geist Mono';
+            src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-mono/GeistMono-Regular.woff2') format('woff2');
+        }
+        .font-mono-data { font-family: 'Geist Mono', monospace; }
+        
+        body {
+            background-color: #0B0B0B;
+            color: #e5e2e1;
+            overflow-x: hidden;
+        }
+
+        .carbon-pattern {
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%), 
+                              linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%), 
+                              linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+            background-size: 4px 4px;
+        }
+
+        .glass-panel {
+            background: rgba(31, 33, 36, 0.6);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+            border-right-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .neon-underglow-red {
+            box-shadow: 0 0 15px rgba(225, 6, 0, 0.3);
+        }
+
+        .podium-gold { border-bottom: 4px solid #FFD700; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3)); }
+        .podium-silver { border-bottom: 4px solid #C0C0C0; filter: drop-shadow(0 0 10px rgba(192, 192, 192, 0.3)); }
+        .podium-bronze { border-bottom: 4px solid #CD7F32; filter: drop-shadow(0 0 10px rgba(205, 127, 50, 0.3)); }
+
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.03);
+            position: absolute;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            from { top: 0; }
+            to { top: 100%; }
+        }
+
+        .progress-bar-fill {
+            transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .podium-animate {
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#ffb4a8",
+                      "on-surface-variant": "#e9bcb5",
+                      "on-secondary": "#2f3034",
+                      "secondary-fixed-dim": "#c6c6ca",
+                      "surface-container-high": "#2a2a2a",
+                      "error-container": "#93000a",
+                      "tertiary-fixed-dim": "#00dbe9",
+                      "surface-container-lowest": "#0e0e0e",
+                      "tertiary": "#00dbe9",
+                      "surface": "#131313",
+                      "on-tertiary-fixed": "#002022",
+                      "background": "#131313",
+                      "tertiary-container": "#007c84",
+                      "on-surface": "#e5e2e1",
+                      "surface-bright": "#3a3939",
+                      "on-tertiary-fixed-variant": "#004f54",
+                      "on-tertiary": "#00363a",
+                      "surface-tint": "#ffb4a8",
+                      "primary": "#ffb4a8",
+                      "on-tertiary-container": "#d7fbff",
+                      "secondary": "#c6c6ca",
+                      "tertiary-fixed": "#7df4ff",
+                      "on-primary-fixed-variant": "#930300",
+                      "outline-variant": "#5e3f3a",
+                      "inverse-on-surface": "#313030",
+                      "surface-container": "#201f1f",
+                      "surface-container-highest": "#353534",
+                      "primary-container": "#e10600",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#af8781",
+                      "inverse-primary": "#c00500",
+                      "surface-container-low": "#1c1b1b",
+                      "on-primary-container": "#fff2f0",
+                      "on-error": "#690005",
+                      "on-secondary-container": "#b7b8bc",
+                      "primary-fixed": "#ffdad4",
+                      "error": "#ffb4ab",
+                      "secondary-fixed": "#e2e2e6",
+                      "on-background": "#e5e2e1",
+                      "surface-dim": "#131313",
+                      "inverse-surface": "#e5e2e1",
+                      "secondary-container": "#47494c",
+                      "on-secondary-fixed": "#1a1c1f",
+                      "on-primary": "#680200",
+                      "on-primary-fixed": "#410100",
+                      "on-secondary-fixed-variant": "#45474a",
+                      "surface-variant": "#353534"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "48px",
+                      "unit": "8px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "title-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Geist"],
+                      "headline-lg-mobile": ["Anybody"],
+                      "display-lg": ["Anybody"],
+                      "headline-lg": ["Anybody"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "title-md": ["20px", {"lineHeight": "1.5", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                      "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="carbon-pattern min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(225,6,0,0.1)] flex items-center justify-between px-margin-mobile h-16">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-transform">menu</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold tracking-tighter text-primary italic">F1 LIVE QUIZ</h1>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden hover:opacity-80 transition-opacity cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a Formula 1 racing driver in a sleek carbon-fiber helmet with a tinted visor. The background is a blurred garage with high-tech monitors and neon red accents. The lighting is cinematic and dramatic, emphasizing the metallic textures and the intense focus of a pro driver." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASHpSyDG9ZYKbCOXoigPeRrGjlEpRyF28icPSBnV_h8j6dsA3blWg76jVGnN81eOPavaB-GNLeiiZtKmxihbDiDbyRqMQwDYFjyElQANbEPXjx-4aazTxxICtheRdLHc60glm5QkXhNl13DR39LRaybWrw-0ukbVdSbeq7rl_15M0t-X2paLRyWx3iyUx63s5tKlgD4im3Iro3sTfTNxiVDigsIgsEV95uSElUioxGHeITPqtU36kvMxXK60G1JOc3ihT34he0ebCt"/>
+</div>
+</header>
+<main class="pt-20 px-margin-mobile container mx-auto max-w-lg">
+<!-- Podium Section -->
+<section class="relative h-80 flex items-end justify-center gap-2 mb-12 overflow-hidden">
+<div class="scanline"></div>
+<!-- Rank 2: Silver -->
+<div class="podium-animate flex flex-col items-center w-1/3" style="animation-delay: 0.2s;">
+<div class="relative mb-3">
+<div class="w-16 h-16 rounded-full border-2 border-secondary p-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="A high-quality avatar of an esports racer with a modern digital interface overlay. The racer wears a white and silver racing suit with branding. The background is a moody, dark grey studio with volumetric lighting and atmospheric smoke, fitting a premium F1 leaderboard aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_JA19C8wJtwxBi6dfjDbBtRBL_x9adqZ0UjfUxezJDIRNDIv_xaulmDp4qhaQs9L_2IH_DC9T26yjGKWmd6ik5_1Tfw1e-58LOl56LGmvplXAiylfy_pGTUNabzttrEux3VU2n5cBFZF-396NCs0KA5PsCTT2Ie00bzGoawcvEmlemjDpsA6sQhdTlZKmTYpSxXYhXjrzp-63GEkcrAWwnSW5ZoPosRXESEFqgc6zr6fVqaWKz5wlXQD3bKLbi3rDZj59nxi5tHnH"/>
+</div>
+<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary px-2 py-0.5 rounded-full font-label-sm text-label-sm">P2</div>
+</div>
+<div class="glass-panel w-full h-32 rounded-t-lg podium-silver flex flex-col items-center justify-center p-2 text-center">
+<span class="font-label-sm text-secondary block truncate w-full">CHECO_11</span>
+<span class="font-mono-data text-primary font-bold">14,205</span>
+</div>
+</div>
+<!-- Rank 1: Gold -->
+<div class="podium-animate flex flex-col items-center w-5/12 z-10" style="animation-delay: 0.4s;">
+<div class="relative mb-4 scale-110">
+<div class="w-20 h-20 rounded-full border-2 border-primary-fixed-dim p-1 neon-underglow-red">
+<img class="w-full h-full rounded-full object-cover" data-alt="A cinematic, high-detail portrait of a top-tier racing champion wearing a dark carbon fiber helmet with gold leaf accents. The lighting is high-contrast, casting sharp shadows and highlighting a golden crown icon floating above the helmet. The background is a blurred night race track with glowing red and white light streaks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB53t8V-vcoj4DdknPem6p7rEeSth3gxbTpsqHLYBWYBNcKimqWRCLBYk_ed2N6-HHmw0Qbleki_F-e-7omlhnHuhia0DqYqT6Cuk_X-iAIfY4LC7a0qmTCDfKiX7HBJtHg95ACIUrF_peqKArHCCbG0sIvSb0yvB5WdDV1hZxHUElNuy-m3CBICMnlc9KZfaU6-21kRvg_ccIZBircKZELOlAiITcxCXY0Ninq-BjaBkBemA6HfzZkIwQ-Vhzl1pRRITPslnhWVRW5"/>
+</div>
+<div class="absolute -top-6 left-1/2 -translate-x-1/2">
+<span class="material-symbols-outlined text-[#FFD700] text-3xl" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary-container text-on-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm shadow-lg">P1</div>
+</div>
+<div class="glass-panel w-full h-44 rounded-t-lg podium-gold flex flex-col items-center justify-center p-2 text-center bg-surface-container-highest/40">
+<span class="font-label-sm text-on-surface block truncate w-full">MAX_33</span>
+<span class="font-mono-data text-primary text-xl font-extrabold tracking-tight">15,840</span>
+</div>
+</div>
+<!-- Rank 3: Bronze -->
+<div class="podium-animate flex flex-col items-center w-1/3" style="animation-delay: 0.6s;">
+<div class="relative mb-3">
+<div class="w-16 h-16 rounded-full border-2 border-[#CD7F32] p-1">
+<img class="w-full h-full rounded-full object-cover" data-alt="A digital profile photo of an esports competitor wearing a sleek blue and orange racing jersey. The setting is a professional sim-racing cockpit with multi-monitor setups visible behind. The lighting is a blend of cool blue and warm bronze, creating a sophisticated and competitive atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCspqwrTe9nWCnlmH6BH_-tHl3L5DHqPWaHgmCakUXr4It6QNIuRRTqWb7DaQ-4OB2L41-fcwViJrOeoiIdS3nzxtvHxiA3SXI7ukAMfdRzFHfl_fzmvXtGBhbCd-FMZ3ALxQuTpTQCKitzxoFKd45MNAjq_1eAOvREkDUwByianedI65goF1KfVgtatTG_XmnPMitDRySObiLAu-UK2ICb9M68_leGaTJJfvRlkHXEGOTfiu1alP6vv5fQ3a-z0qfAbMfXpKV4vXJX"/>
+</div>
+<div class="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-[#CD7F32] text-white px-2 py-0.5 rounded-full font-label-sm text-label-sm">P3</div>
+</div>
+<div class="glass-panel w-full h-24 rounded-t-lg podium-bronze flex flex-col items-center justify-center p-2 text-center">
+<span class="font-label-sm text-[#CD7F32] block truncate w-full">NORRIS_4</span>
+<span class="font-mono-data text-primary font-bold">13,990</span>
+</div>
+</div>
+</section>
+<!-- Ranking Table -->
+<section class="space-y-3 mb-8">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile italic uppercase tracking-widest text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span> Global Standings
+            </h2>
+<div class="space-y-2 overflow-y-auto max-h-[400px] pr-1 custom-scrollbar">
+<!-- Current User Row -->
+<div class="glass-panel p-4 rounded-xl flex items-center gap-4 border-l-4 border-primary bg-primary/5 animate-pulse">
+<span class="font-mono-data text-primary font-bold text-lg w-8">42</span>
+<div class="w-10 h-10 rounded-full border border-primary/50 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A personalized gamer avatar with a custom racing helmet featuring bright red and black racing stripes. The avatar has a focused expression, looking ahead. The background is a stylized neon pit lane with rain falling, reflecting the glowing red lights. High-octane esports aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLXRg6TVUpgjfir4T-wbdfLNkAC5Ga9qko1e6SJUHCPa7bCSoZOwnYyFYFxE1N5PeiKCAHas3hU93uGxsTiazlhm18VuUdlMsqaxE_BWWZKUG6sQSK2uIxk_HaVm_9d_7kxsGUJ6chy_Mn1DePcMlfNBO1n8d8e0XxVkDK8uOTLgnJaTRCOE47AkTzDV5DgoB4fQzYVwQYSTHbod5us3uMKrNdmO43HIN__PYb0HQq3Ks2He3pwmHKExxgl16ssF4m9sr7ySnMrRgv"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-title-md text-on-surface truncate">YOU</p>
+<p class="font-label-sm text-on-surface-variant">Top 5%</p>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-primary font-bold">9,420</p>
+<p class="font-label-sm text-on-surface-variant">+120ms</p>
+</div>
+</div>
+<!-- Others -->
+<script>
+                    const players = [
+                        { rank: 4, name: 'HAMILTON_44', score: '13,100', bonus: '+85ms', img: 'mercedes driver' },
+                        { rank: 5, name: 'LECLERC_16', score: '12,850', bonus: '+92ms', img: 'ferrari driver' },
+                        { rank: 6, name: 'ALONSO_14', score: '12,500', bonus: '+105ms', img: 'aston martin driver' },
+                        { rank: 7, name: 'SAINZ_55', score: '12,110', bonus: '+115ms', img: 'racing driver' },
+                        { rank: 8, name: 'RUSSELL_63', score: '11,900', bonus: '+122ms', img: 'british racer' }
+                    ];
+                    
+                    document.write(players.map(p => `
+                        <div class="glass-panel p-4 rounded-xl flex items-center gap-4 hover:bg-white/5 transition-colors cursor-pointer group">
+                            <span class="font-mono-data text-on-surface-variant font-bold text-lg w-8 group-hover:text-primary transition-colors">${p.rank}</span>
+                            <div class="w-10 h-10 rounded-full border border-white/10 overflow-hidden shrink-0">
+                                <img src="placeholder" data-alt="A professional racing avatar portrait of a competitive driver for an F1 esports team. Clean composition with a vibrant background of a blurred racing circuit at dusk. High contrast lighting with red and cyan rim lights, creating a high-tech HUD look." class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-title-md text-on-surface truncate">${p.name}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-mono-data text-on-surface font-bold">${p.score}</p>
+                                <p class="font-label-sm text-on-surface-variant">${p.bonus}</p>
+                            </div>
+                        </div>
+                    `).join(''));
+                </script>
+</div>
+</section>
+</main>
+<!-- Statistics Popup (Initial State: Hidden) -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-margin-mobile bg-black/80 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none" id="statsOverlay">
+<div class="glass-panel w-full max-w-md rounded-2xl p-6 overflow-hidden relative">
+<div class="scanline"></div>
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile italic text-primary leading-tight">TELEMETRY<br/>LIVE FEED</h3>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 active:scale-90 transition-transform" onclick="toggleStats()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<p class="font-body-md text-on-surface mb-6">"Who holds the record for most wins at Spa?"</p>
+<div class="space-y-6">
+<!-- Stats Item -->
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm uppercase tracking-widest">
+<span class="text-on-surface">M. Schumacher</span>
+<span class="text-primary font-mono-data">65%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="progress-bar-fill h-full bg-primary-container w-0 rounded-full" style="--target-width: 65%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm uppercase tracking-widest">
+<span class="text-on-surface-variant">Lewis Hamilton</span>
+<span class="text-on-surface-variant font-mono-data">20%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="progress-bar-fill h-full bg-on-surface-variant w-0 rounded-full" style="--target-width: 20%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm uppercase tracking-widest">
+<span class="text-on-surface-variant">Ayrton Senna</span>
+<span class="text-on-surface-variant font-mono-data">10%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="progress-bar-fill h-full bg-on-surface-variant w-0 rounded-full" style="--target-width: 10%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-sm uppercase tracking-widest">
+<span class="text-on-surface-variant">Sebastian Vettel</span>
+<span class="text-on-surface-variant font-mono-data">5%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="progress-bar-fill h-full bg-on-surface-variant w-0 rounded-full" style="--target-width: 5%;"></div>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-4 bg-primary-container text-on-primary-container font-headline-lg-mobile text-[16px] italic rounded-xl active:scale-95 transition-all neon-underglow-red" onclick="toggleStats()">
+                BACK TO PADDOCK
+            </button>
+</div>
+</div>
+<!-- Trigger Button (Floating for demo) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container shadow-2xl z-40 active:scale-90 transition-transform" onclick="toggleStats()">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</button>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container/60 backdrop-blur-2xl border-t border-white/10 shadow-[0_-5px_20px_rgba(0,0,0,0.5)] flex justify-around items-center h-20 pb-safe px-margin-mobile">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined">sports_score</span>
+<span class="font-label-sm text-label-sm">Race</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary filter drop-shadow-[0_0_8px_rgba(225,6,0,0.6)] active:scale-90 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-label-sm text-label-sm">Standings</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined">local_mall</span>
+<span class="font-label-sm text-label-sm">Store</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary/80 transition-colors active:scale-90 transition-all duration-200 cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+<script>
+        function toggleStats() {
+            const overlay = document.getElementById('statsOverlay');
+            const isVisible = overlay.classList.contains('opacity-100');
+            
+            if (!isVisible) {
+                overlay.classList.remove('pointer-events-none');
+                overlay.classList.add('opacity-100');
+                // Trigger bar animations
+                setTimeout(() => {
+                    const bars = document.querySelectorAll('.progress-bar-fill');
+                    bars.forEach(bar => {
+                        bar.style.width = bar.getAttribute('style').match(/--target-width: (.*?);/)[1];
+                    });
+                }, 100);
+            } else {
+                overlay.classList.add('pointer-events-none');
+                overlay.classList.remove('opacity-100');
+                // Reset bars
+                const bars = document.querySelectorAll('.progress-bar-fill');
+                bars.forEach(bar => bar.style.width = '0');
+            }
+        }
+
+        // Simulating the rank sliding up on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const podiums = document.querySelectorAll('.podium-animate');
+            podiums.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(50px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 100 * (index + 1));
+            });
+        });
+    </script>
+</body></html>
