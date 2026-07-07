@@ -16,15 +16,15 @@ export function LandingPage() {
       <section className="grid flex-1 items-center gap-10 py-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <motion.p
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-f1-cyan/30 bg-f1-cyan/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.28em] text-f1-cyan"
+            className="mb-4 inline-flex items-center gap-2 rounded-full border-2 border-f1-cyan bg-white px-5 py-2 text-sm font-bold tracking-widest text-f1-surface shadow-md"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <RadioTower className="h-4 w-4" aria-hidden="true" />
+            <RadioTower className="h-5 w-5 text-f1-cyan" aria-hidden="true" />
             Live Event Demo
           </motion.p>
           <motion.h1
-            className="font-display text-5xl font-black italic uppercase leading-none sm:text-6xl lg:text-7xl"
+            className="font-display text-6xl font-black uppercase leading-tight text-white drop-shadow-xl sm:text-7xl lg:text-8xl"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.08 }}
@@ -32,7 +32,7 @@ export function LandingPage() {
             Apex Velocity
           </motion.h1>
           <motion.p
-            className="mt-5 max-w-2xl text-lg leading-8 text-white/65"
+            className="mt-5 max-w-2xl text-xl leading-8 text-white/90 drop-shadow-md font-bold"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.16 }}
@@ -48,21 +48,21 @@ export function LandingPage() {
           >
             <Link
               to="/login"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-f1-red px-6 py-3 font-display text-lg font-black italic uppercase text-white neon-glow transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-f1-cyan"
+              className="inline-flex items-center justify-center gap-2 rounded-[2rem] bg-gradient-to-r from-f1-red to-f1-red-glow px-8 py-4 font-display text-2xl font-black uppercase text-white shadow-[0_8px_0_rgba(0,0,0,0.2)] transition hover:-translate-y-1 hover:shadow-[0_12px_0_rgba(0,0,0,0.2)] active:translate-y-2 active:shadow-none focus:outline-none"
             >
               Enter Event
-              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+              <ChevronRight className="h-6 w-6" aria-hidden="true" />
             </Link>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
                 href="#event-preview"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-bold text-white/80 transition hover:border-f1-cyan/60 hover:text-white focus:outline-none focus:ring-2 focus:ring-f1-cyan"
+                className="inline-flex items-center justify-center rounded-2xl border-4 border-white/20 bg-white/10 px-6 py-4 font-bold text-white transition hover:border-f1-cyan hover:bg-f1-cyan/20 focus:outline-none"
               >
                 View Format
               </a>
               <Link
                 to="/admin/login"
-                className="inline-flex items-center justify-center rounded-xl border border-f1-red/30 bg-f1-red/10 px-6 py-3 font-bold text-red-100 transition hover:border-f1-red hover:text-white focus:outline-none focus:ring-2 focus:ring-f1-cyan"
+                className="inline-flex items-center justify-center rounded-2xl border-4 border-purple-400/30 bg-purple-500/20 px-6 py-4 font-bold text-purple-100 transition hover:border-purple-400 hover:bg-purple-500/40 focus:outline-none"
               >
                 Host Login
               </Link>
@@ -77,42 +77,42 @@ export function LandingPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.18, duration: 0.55 }}
         >
-          <div className="absolute inset-x-8 top-8 h-40 rounded-full bg-f1-red/20 blur-3xl" aria-hidden="true" />
-          <GlassCard className="relative overflow-hidden p-0" glow>
-            <div className="border-b border-white/10 bg-white/[0.03] px-5 py-4">
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/45">
+          <div className="absolute inset-x-8 top-8 h-40 rounded-full bg-yellow-400/30 blur-3xl" aria-hidden="true" />
+          <GlassCard className="relative overflow-hidden p-0 border-[4px] border-white/50" glow>
+            <div className="border-b-[3px] border-white/20 bg-white/[0.08] px-5 py-4">
+              <p className="text-sm font-black uppercase tracking-widest text-white drop-shadow-sm">
                 Race Control Preview
               </p>
             </div>
             <div className="space-y-5 p-5">
-              <div className="rounded-xl border border-f1-red/30 bg-f1-red/10 p-4">
-                <p className="text-xs uppercase tracking-widest text-f1-red">Current Question</p>
-                <p className="mt-2 font-display text-2xl font-black italic">
+              <div className="rounded-3xl border-4 border-yellow-400 bg-yellow-400/20 p-5 shadow-inner">
+                <p className="text-sm font-bold uppercase text-yellow-300 drop-shadow-sm">Current Question</p>
+                <p className="mt-2 font-display text-3xl font-black text-white drop-shadow-md">
                   Which circuit hosts the night race under Marina Bay lights?
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 {['Monaco', 'Singapore', 'Suzuka', 'Silverstone'].map((answer, index) => (
                   <div
                     key={answer}
-                    className={`rounded-xl border p-3 text-sm font-semibold ${
+                    className={`rounded-2xl border-[3px] p-4 text-lg font-bold text-center transition hover:scale-105 cursor-pointer ${
                       index === 1
-                        ? 'border-f1-cyan/50 bg-f1-cyan/15 text-f1-cyan'
-                        : 'border-white/10 bg-white/5 text-white/60'
+                        ? 'border-f1-cyan bg-f1-cyan text-white shadow-lg'
+                        : 'border-white/20 bg-white/10 text-white hover:bg-white/20'
                     }`}
                   >
-                    {String.fromCharCode(65 + index)}. {answer}
+                    {answer}
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-4">
                 {highlights.map((item) => {
                   const Icon = item.icon
                   return (
-                    <div key={item.label} className="rounded-xl border border-white/10 bg-black/20 p-3">
-                      <Icon className="mb-2 h-5 w-5 text-f1-cyan" aria-hidden="true" />
-                      <p className="text-xs uppercase tracking-wider text-white/40">{item.label}</p>
-                      <p className="font-display font-bold">{item.value}</p>
+                    <div key={item.label} className="rounded-2xl border-4 border-white/20 bg-black/20 p-4 text-center">
+                      <Icon className="mb-2 h-8 w-8 text-f1-cyan mx-auto drop-shadow-md" aria-hidden="true" />
+                      <p className="text-xs font-bold uppercase text-white/70">{item.label}</p>
+                      <p className="font-display text-xl font-bold text-white">{item.value}</p>
                     </div>
                   )
                 })}

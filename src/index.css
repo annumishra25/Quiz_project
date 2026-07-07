@@ -1,16 +1,16 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-f1-red: #e10600;
-  --color-f1-red-glow: #ff4136;
-  --color-f1-cyan: #00dbe9;
-  --color-f1-surface: #131313;
-  --color-f1-surface-glass: rgba(31, 33, 36, 0.6);
-  --color-f1-on-surface: #e5e2e1;
-  --color-f1-outline: rgba(255, 255, 255, 0.1);
+  --color-f1-red: #ff3b30; /* Bright Racing Red */
+  --color-f1-red-glow: #ff4d4d;
+  --color-f1-cyan: #32d74b; /* Vibrant Green/Cyan */
+  --color-f1-surface: #0a4f9e; /* Bright Racing Blue */
+  --color-f1-surface-glass: rgba(255, 255, 255, 0.2); 
+  --color-f1-on-surface: #ffffff;
+  --color-f1-outline: rgba(255, 255, 255, 0.4);
 
-  --font-display: 'Anybody', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Fredoka', sans-serif;
+  --font-body: 'Nunito', sans-serif;
 }
 
 @layer base {
@@ -19,19 +19,20 @@
   }
 
   body {
-    @apply min-h-screen bg-[#0b0b0b] text-f1-on-surface font-body;
-    background-image:
-      linear-gradient(135deg, rgba(225, 6, 0, 0.07), transparent 32%),
-      linear-gradient(315deg, rgba(0, 219, 233, 0.05), transparent 36%),
-      url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z' fill='%23ffffff' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
+    @apply min-h-screen bg-blue-600 text-f1-on-surface font-body overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.15), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1), transparent 40%);
+    background-attachment: fixed;
   }
 
+  /* Keep themes for compatibility but brighten them */
   html[data-theme='neon'] body {
-    background-color: #06090d;
+    background-color: #2563eb;
   }
 
   html[data-theme='contrast'] body {
-    background-color: #020202;
+    background-color: #1e3a8a;
   }
 
   html[data-motion='reduced'] *,
@@ -45,21 +46,16 @@
 
 @layer components {
   .glass-panel {
-    @apply rounded-2xl border border-white/10 bg-f1-surface-glass backdrop-blur-2xl;
-    background-image:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 42%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
-    border-bottom-color: rgba(255, 255, 255, 0.18);
-    border-right-color: rgba(255, 255, 255, 0.18);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 80px rgba(0, 0, 0, 0.28);
+    @apply rounded-[2rem] border-[3px] border-white/60 bg-white/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.15)];
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.8);
   }
 
   .neon-glow {
-    box-shadow: 0 0 15px rgba(225, 6, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(255, 59, 48, 0.5), inset 0 -4px 0 rgba(0, 0, 0, 0.1);
   }
 
   .neon-glow-cyan {
-    box-shadow: 0 0 15px rgba(0, 219, 233, 0.3);
+    box-shadow: 0 4px 20px rgba(50, 215, 75, 0.5), inset 0 -4px 0 rgba(0, 0, 0, 0.1);
   }
 
   .font-display {
@@ -67,35 +63,26 @@
   }
 
   .scanline {
-    @apply pointer-events-none absolute inset-x-0 h-0.5 bg-f1-red/10;
-    animation: scan 4s linear infinite;
+    display: none; 
   }
 
   .carbon-grid {
-    background-image:
-      linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%),
-      linear-gradient(-45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.025) 75%),
-      linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.025) 75%);
-    background-position:
-      0 0,
-      0 12px,
-      12px -12px,
-      -12px 0;
-    background-size: 24px 24px;
+    /* Colorful Checkered pattern */
+    background-image: 
+      linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)), 
+      linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
   }
 
   .track-streak {
-    background: linear-gradient(90deg, transparent, rgba(225, 6, 0, 0.38), rgba(0, 219, 233, 0.24), transparent);
-    transform: skewY(-12deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6), transparent);
+    transform: skewY(-5deg);
+    border-radius: 9999px;
   }
 }
 
-@keyframes scan {
-  from {
-    top: 0;
-  }
-  to {
-    top: 100%;
-  }
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }

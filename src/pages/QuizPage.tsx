@@ -169,7 +169,7 @@ export function QuizPage() {
             className="mx-auto w-full max-w-3xl"
           >
             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-2 text-sm text-white/50">
+              <div className="flex items-center gap-2 text-sm text-white/50 font-bold">
                 <Timer className="h-4 w-4 text-f1-cyan" aria-hidden="true" />
                 <span>
                   Lap <strong className="text-white">{currentQuestionIndex + 1}</strong> /{' '}
@@ -195,11 +195,11 @@ export function QuizPage() {
               </div>
             </div>
 
-            <GlassCard glow className="mb-6">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-f1-red">
+            <GlassCard glow className="mb-6 border-[3px] border-white/20">
+              <p className="mb-2 text-sm font-bold uppercase tracking-widest text-yellow-300 drop-shadow-sm">
                 Question {currentQuestionIndex + 1}
               </p>
-              <h2 className="font-display text-2xl font-bold leading-snug sm:text-3xl">
+              <h2 className="font-display text-2xl font-black leading-snug sm:text-3xl text-white">
                 {question.question}
               </h2>
             </GlassCard>
@@ -211,7 +211,7 @@ export function QuizPage() {
                 const showResult = revealed
 
                 let stateClasses =
-                  'bg-white/5 border-white/10 hover:border-f1-red/50 hover:bg-white/10'
+                  'bg-white/10 border-[3px] border-white/20 hover:border-white/50 hover:bg-white/20'
 
                 if (showResult) {
                   if (isCorrect) {
@@ -238,10 +238,10 @@ export function QuizPage() {
                     aria-pressed={isSelected}
                     aria-disabled={revealed}
                   >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-f1-red/20 font-display font-bold text-f1-red">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/30 font-display font-black text-white shadow-sm">
                       {String.fromCharCode(65 + index)}
                     </span>
-                    <span className="flex-1 font-medium">{option}</span>
+                    <span className="flex-1 font-bold text-lg">{option}</span>
                     {showResult && isCorrect && (
                       <CheckCircle2
                         className="h-5 w-5 shrink-0 text-emerald-400"
