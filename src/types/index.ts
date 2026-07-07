@@ -74,3 +74,37 @@ export interface QuizContextValue extends QuizState {
   getAccuracy: () => number
   getWinner: () => Player | null
 }
+
+export type AdminQuizStatus =
+  | 'idle'
+  | 'lobby-created'
+  | 'live'
+  | 'leaderboard'
+  | 'statistics'
+  | 'wheel'
+  | 'ended'
+
+export interface AdminSession {
+  roomCode: string
+  adminPin: string
+}
+
+export interface AdminState {
+  session: AdminSession | null
+  quizStatus: AdminQuizStatus
+  currentQuestionIndex: number
+  playersJoined: number
+  lastAction: string
+}
+
+export interface AdminContextValue extends AdminState {
+  loginAdmin: (roomCode: string, adminPin: string) => void
+  logoutAdmin: () => void
+  createLobby: () => void
+  startQuiz: () => void
+  showLeaderboard: () => void
+  showStatistics: () => void
+  nextQuestion: () => void
+  spinPrizeWheel: () => void
+  endQuiz: () => void
+}

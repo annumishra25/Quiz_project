@@ -53,12 +53,20 @@ export function LandingPage() {
               Enter Event
               <ChevronRight className="h-5 w-5" aria-hidden="true" />
             </Link>
-            <a
-              href="#event-preview"
-              className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-bold text-white/80 transition hover:border-f1-cyan/60 hover:text-white focus:outline-none focus:ring-2 focus:ring-f1-cyan"
-            >
-              View Format
-            </a>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#event-preview"
+                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3 font-bold text-white/80 transition hover:border-f1-cyan/60 hover:text-white focus:outline-none focus:ring-2 focus:ring-f1-cyan"
+              >
+                View Format
+              </a>
+              <Link
+                to="/admin/login"
+                className="inline-flex items-center justify-center rounded-xl border border-f1-red/30 bg-f1-red/10 px-6 py-3 font-bold text-red-100 transition hover:border-f1-red hover:text-white focus:outline-none focus:ring-2 focus:ring-f1-cyan"
+              >
+                Host Login
+              </Link>
+            </div>
           </motion.div>
         </div>
 
