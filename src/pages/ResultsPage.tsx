@@ -6,7 +6,7 @@ import { GlassCard } from '../components/GlassCard'
 import { LeaderboardPanel } from '../components/LeaderboardPanel'
 import { PageLayout } from '../components/PageLayout'
 import { LoadingSpinner } from '../components/LoadingSpinner'
-import { getInitials } from '../data/players'
+import { PlayerAvatar } from '../components/PlayerAvatar'
 import { useQuiz } from '../hooks/useQuiz'
 
 export function ResultsPage() {
@@ -61,11 +61,7 @@ export function ResultsPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           <GlassCard>
             <div className="flex items-center gap-3">
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold text-white ${currentPlayer?.avatar ?? 'bg-f1-red'}`}
-              >
-                {getInitials(user)}
-              </div>
+              <PlayerAvatar avatar={currentPlayer?.avatar ?? null} username={user ?? ''} sizePx={48} fontSize="1.1rem" />
               <div>
                 <div className="flex items-center gap-1 text-xs uppercase tracking-widest text-white/50">
                   <User className="h-3.5 w-3.5" aria-hidden="true" />

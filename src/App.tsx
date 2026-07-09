@@ -15,6 +15,7 @@ import { LobbyPage } from './pages/LobbyPage'
 import { QuizPage } from './pages/QuizPage'
 import { WheelPage } from './pages/WheelPage'
 import { ResultsPage } from './pages/ResultsPage'
+import { SpiderTransitionPage } from './pages/SpiderTransitionPage'
 
 export default function App() {
   const [isBooting, setIsBooting] = useState(true)
@@ -46,6 +47,7 @@ export default function App() {
 
                   <Route element={<ProtectedRoute />}>
                     <Route path="/lobby" element={<LobbyPage />} />
+                    <Route path="/transition" element={<SpiderTransitionPage />} />
                     <Route path="/quiz" element={<QuizPage />} />
                     <Route path="/wheel" element={<WheelPage />} />
                     <Route path="/results" element={<ResultsPage />} />

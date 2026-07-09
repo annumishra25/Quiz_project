@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom'
 import { LogIn, Moon, Settings, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { AnimatedBackground } from './AnimatedBackground'
+import { UnderwaterBackground } from './UnderwaterBackground'
 import { SettingsModal } from './SettingsModal'
 import { useSettings } from '../hooks/useSettings'
 
 interface PageLayoutProps {
   children: ReactNode
   title?: string
+  isUnderwater?: boolean
 }
 
-export function PageLayout({ children, title }: PageLayoutProps) {
+export function PageLayout({ children, title, isUnderwater = false }: PageLayoutProps) {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { theme, toggleTheme } = useSettings()
 
@@ -42,14 +44,14 @@ export function PageLayout({ children, title }: PageLayoutProps) {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <AnimatedBackground />
+      {isUnderwater ? <UnderwaterBackground /> : <AnimatedBackground />}
       <main className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 sm:px-6 lg:px-8">
         <nav className="mb-8 flex items-center justify-between gap-4" aria-label="Primary">
           <Link
             to="/"
             className="group flex items-center gap-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-f1-cyan"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl border-4 border-f1-cyan bg-white font-display font-black text-f1-surface shadow-md">
+            <span className={`flex h-10 w-10 items-center justify-center rounded-xl border-4 bg-white font-display font-black text-f1-surface shadow-md ${isUnderwater ? 'border-[#00e5ff]' : 'border-f1-cyan'}`}>
               AV
             </span>
             <span>

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { Minus, TrendingDown, TrendingUp, Trophy, Wifi } from 'lucide-react'
-import { getInitials } from '../data/players'
 import type { Player } from '../types'
 import { GlassCard } from './GlassCard'
+import { PlayerAvatar } from './PlayerAvatar'
 
 interface LeaderboardPanelProps {
   players: Player[]
@@ -58,12 +58,7 @@ export function LeaderboardPanel({ players, currentUsername }: LeaderboardPanelP
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: visualIndex * 0.08, type: 'spring', stiffness: 260, damping: 22 }}
             >
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold text-white ${player.avatar}`}
-                aria-hidden="true"
-              >
-                {getInitials(player.username)}
-              </div>
+              <PlayerAvatar avatar={player.avatar} username={player.username} sizePx={48} fontSize="1rem" />
               <p className="max-w-full truncate text-xs font-semibold">{player.username}</p>
               <div
                 className={`${height} flex w-full flex-col items-center justify-end rounded-t-xl border border-white/10 bg-gradient-to-b ${tone} px-2 pb-3`}
@@ -103,12 +98,7 @@ export function LeaderboardPanel({ players, currentUsername }: LeaderboardPanelP
               >
                 {index + 1}
               </span>
-              <div
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white ${player.avatar}`}
-                aria-hidden="true"
-              >
-                {getInitials(player.username)}
-              </div>
+              <PlayerAvatar avatar={player.avatar} username={player.username} sizePx={40} fontSize="0.85rem" />
               <div className="min-w-0 flex-1">
                 <p className="truncate font-semibold">
                   {player.username}

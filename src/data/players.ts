@@ -1,4 +1,5 @@
 import type { Player } from '../types'
+import { CHARACTERS } from './characters'
 
 const DRIVER_NAMES = [
   'HamiltonFan42',
@@ -48,12 +49,13 @@ export function generateMockPlayers(currentUser: string, currentUserAvatar = get
   const otherNames = DRIVER_NAMES.filter((n) => n.toLowerCase() !== currentUser.toLowerCase())
   const shuffled = [...otherNames].sort(() => Math.random() - 0.5).slice(0, 19)
 
+  const hostChar = CHARACTERS[1] // Captain Octo as Host!
   const players: Player[] = [
     {
       id: 'host',
       username: 'RaceControl',
       score: 0,
-      avatar: getAvatarColor(0),
+      avatar: `${hostChar.emoji}|${hostChar.color}`,
       isHost: true,
     },
     {
@@ -63,12 +65,15 @@ export function generateMockPlayers(currentUser: string, currentUserAvatar = get
       avatar: currentUserAvatar,
       isCurrentUser: true,
     },
-    ...shuffled.map((name, i) => ({
-      id: `player-${i}`,
-      username: name,
-      score: Math.floor(Math.random() * 1200) + 100,
-      avatar: getAvatarColor(i + 2),
-    })),
+    ...shuffled.map((name, i) => {
+      const char = CHARACTERS[(i + 2) % CHARACTERS.length]
+      return {
+        id: `player-${i}`,
+        username: name,
+        score: Math.floor(Math.random() * 1200) + 100,
+        avatar: `${char.emoji}|${char.color}`,
+      }
+    }),
   ]
 
   return players
