@@ -93,31 +93,6 @@ export function SpiderTransitionPage() {
         fontFamily: "'Bebas Neue', sans-serif",
       }}
     >
-      <style>{`
-        @keyframes kickUp {
-          0%, 100% { transform: rotate(-14deg) translateY(-3px); }
-          50%       { transform: rotate(10deg) translateY(3px); }
-        }
-        @keyframes kickDown {
-          0%, 100% { transform: rotate(10deg) translateY(3px); }
-          50%       { transform: rotate(-14deg) translateY(-3px); }
-        }
-        @keyframes armPull {
-          0%   { transform: rotate(-30deg); opacity: 1; }
-          40%  { transform: rotate(20deg); opacity: 1; }
-          50%  { opacity: 0.2; }
-          90%  { transform: rotate(-30deg); opacity: 0.2; }
-          100% { opacity: 1; }
-        }
-        @keyframes armReach {
-          0%   { transform: rotate(15deg); opacity: 0.2; }
-          10%  { opacity: 1; }
-          50%  { transform: rotate(-25deg); opacity: 1; }
-          60%  { opacity: 0.2; }
-          100% { transform: rotate(15deg); opacity: 0.2; }
-        }
-      `}</style>
-
       {/* Red vignette background */}
       <div
         className="absolute inset-0"
