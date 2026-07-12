@@ -28,7 +28,7 @@ export function AdminLoginPage() {
       return
     }
 
-    if (!/^\d{4,8}$/.test(trimmedPin)) {
+    if (trimmedPin !== 'annu@2507') {
       setError('Admin PIN must be 4 to 8 digits.')
       return
     }
