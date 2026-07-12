@@ -1,0 +1,158 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-f1-red: #ff3b30; /* Bright Racing Red */
+  --color-f1-red-glow: #ff4d4d;
+  --color-f1-cyan: #32d74b; /* Vibrant Green/Cyan */
+  --color-f1-surface: #0a4f9e; /* Bright Racing Blue */
+  --color-f1-surface-glass: rgba(255, 255, 255, 0.2); 
+  --color-f1-on-surface: #ffffff;
+  --color-f1-outline: rgba(255, 255, 255, 0.4);
+
+  --font-display: 'Fredoka', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply min-h-screen bg-blue-600 text-f1-on-surface font-body overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.15), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1), transparent 40%);
+    background-attachment: fixed;
+  }
+
+  /* Keep themes for compatibility but brighten them */
+  html[data-theme='neon'] body {
+    background-color: #2563eb;
+  }
+
+  html[data-theme='contrast'] body {
+    background-color: #1e3a8a;
+  }
+
+  html[data-motion='reduced'] *,
+  html[data-motion='reduced'] *::before,
+  html[data-motion='reduced'] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-[2rem] border-[3px] border-white/60 bg-white/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.15)];
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .neon-glow {
+    box-shadow: 0 4px 20px rgba(255, 59, 48, 0.5), inset 0 -4px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .neon-glow-cyan {
+    box-shadow: 0 4px 20px rgba(50, 215, 75, 0.5), inset 0 -4px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .scanline {
+    display: none; 
+  }
+
+  .carbon-grid {
+    /* Colorful Checkered pattern */
+    background-image: 
+      linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)), 
+      linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+  }
+
+  .track-streak {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6), transparent);
+    transform: skewY(-5deg);
+    border-radius: 9999px;
+  }
+}
+
+
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Swimmer animations */
+@keyframes kickUp {
+  0%, 100% { transform: rotate(-14deg) translateY(-3px); }
+  50%       { transform: rotate(10deg) translateY(3px); }
+}
+
+@keyframes kickDown {
+  0%, 100% { transform: rotate(10deg) translateY(3px); }
+  50%       { transform: rotate(-14deg) translateY(-3px); }
+}
+
+@keyframes armPull {
+  0%   { transform: rotate(-30deg); opacity: 1; }
+  40%  { transform: rotate(20deg); opacity: 1; }
+  50%  { opacity: 0.2; }
+  90%  { transform: rotate(-30deg); opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+@keyframes armReach {
+  0%   { transform: rotate(15deg); opacity: 0.2; }
+  10%  { opacity: 1; }
+  50%  { transform: rotate(-25deg); opacity: 1; }
+  60%  { opacity: 0.2; }
+  100% { transform: rotate(15deg); opacity: 0.2; }
+}
+
+/* Login page theme animations */
+@keyframes float-ui {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes logo-glow {
+  0%, 100% { text-shadow: 0 0 16px rgba(0,229,255,0.45); }
+  50% { text-shadow: 0 0 28px rgba(0,229,255,0.8), 0 0 8px rgba(0,229,255,0.4); }
+}
+
+@keyframes float-card {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-btn {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(0,200,255,0.45), 0 4px 28px rgba(0,80,255,0.4);
+  }
+  50% {
+    transform: scale(1.015);
+    box-shadow: 0 0 28px rgba(0,200,255,0.65), 0 6px 36px rgba(0,80,255,0.6);
+  }
+}
+
+@keyframes glow-selected {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--gc)55, 0 0 50px var(--gc)1a, 0 4px 18px rgba(0,0,0,0.38);
+  }
+  50% {
+    box-shadow: 0 0 28px var(--gc)88, 0 0 65px var(--gc)33, 0 4px 24px rgba(0,0,0,0.48);
+  }
+}
+
+@keyframes status-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.7; }
+}
+
